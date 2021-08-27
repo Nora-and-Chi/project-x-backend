@@ -1,4 +1,4 @@
-name: Unit tests
+name: PR - Unit tests
 on:
   push:
     branches: [master]

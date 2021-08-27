@@ -1,4 +1,4 @@
-name: e2e tests
+name: PR - E2E tests
 on:
   push:
     branches: [master]
