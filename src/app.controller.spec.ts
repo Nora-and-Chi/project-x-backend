@@ -19,6 +19,6 @@ describe('AppController', () => {
 
   it('should call catsController', () => {
     const catsController = app.get<CatsController>(CatsController);
-    expect(catsController.findAll()).toBe('This is a string of all cat');
+    expect(catsController.findAll()).toBe('This is a string of all cats');
   });
 });
