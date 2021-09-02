@@ -1,0 +1,21 @@
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 5432,
+   "username": "chi",
+   "password": "pass",
+   "database": "project-x-db",
+   "synchronize": true,
+   "logging": false,
+   "entities": ["dist/**/**.entity{.ts}"],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
