@@ -12,7 +12,7 @@ import { DogsModule } from './dogs/dogs.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      autoLoadEntities: true,
+      // autoLoadEntities: true,
       host: 'localhost',
       port: 5432,
       username: 'chi',
@@ -20,7 +20,7 @@ import { DogsModule } from './dogs/dogs.module';
       database: 'db',
       synchronize: true,
       // logging: false,
-      // entities: ['*/**/*.entity.{js,ts}'],
+      entities: [__dirname + '/**/*.entity.{js,ts}'],
       retryAttempts: 2,
     }),
     DogsModule,
@@ -29,5 +29,7 @@ import { DogsModule } from './dogs/dogs.module';
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private connection: Connection) {}
+  constructor(private connection: Connection) {
+    this.connection = connection;
+  }
 }
