@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  main:
+    container_name: main
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+      - 9229:9229 ### HOST_PORT:CONTAINER_PORT ###
+    command: npm run start:dev
+    environment:
+      DATABASE_URL: postgresql://chi:password@postgres.app:5432/db
+    env_file:
+      - .env
+    networks:
+      - webnet
+    depends_on:
+      - database
+  database:
+    container_name: database
+    image: 'postgres:13.4'
+    hostname: 'postgres.app'
+    environment:
+      - POSTGRES_USER=chi
+      - POSTGRES_PASSWORD=password
+      - APP_DB_USER=docker
+      - APP_DB_PASS=docker
+      - POSTGRES_DB=db
+    ports:
+      - 5432:5432
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    networks:
+      - webnet
+networks:
+  webnet:
+volumes:
+  pgdata:
