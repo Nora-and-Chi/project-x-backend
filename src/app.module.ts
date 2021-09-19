@@ -6,7 +6,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { AppController, CatsController } from './app.controller';
 import { AppService } from './app.service';
 import { DogsModule } from './dogs/dogs.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './auth';
 import { UsersModule, UsersService } from './users';
 import { EmailService, EmailModule } from './email';
 
