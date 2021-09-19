@@ -2,12 +2,15 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { Connection } from 'typeorm';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { AppController, CatsController } from './app.controller';
 import { AppService } from './app.service';
 import { DogsModule } from './dogs/dogs.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { UsersService } from './users/users.service';
+import { EmailService } from './email/email.service';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -26,12 +29,18 @@ import { UsersService } from './users/users.service';
       entities: [__dirname + '/**/*.entity.{js,ts}'],
       retryAttempts: 2,
     }),
+    MailerModule.forRootAsync({
+      useFactory: () => ({
+        transport: 'smtp://319b32b90279a2:8d3a4287caf004@smtp.mailtrap.io',
+      }),
+    }),
     DogsModule,
     AuthModule,
     UsersModule,
+    EmailModule,
   ],
   controllers: [AppController, CatsController],
-  providers: [AppService, UsersService],
+  providers: [AppService, UsersService, EmailService],
 })
 export class AppModule {
   constructor(private connection: Connection) {

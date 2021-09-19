@@ -25,7 +25,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, mockJwtService, UsersService, mockUserService],
+      providers: [AuthService, mockJwtService, mockUserService],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
