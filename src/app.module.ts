@@ -8,8 +8,7 @@ import { AppService } from './app.service';
 import { DogsModule } from './dogs/dogs.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule, UsersService } from './users';
-import { EmailService } from './email/email.service';
-import { EmailModule } from './email/email.module';
+import { EmailService, EmailModule } from './email';
 
 @Module({
   imports: [

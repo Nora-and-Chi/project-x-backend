@@ -4,8 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule, UsersService } from '../users';
-import { EmailModule } from '../email/email.module';
-import { EmailService } from '../email/email.service';
+import { EmailModule, EmailService } from '../email';
 
 @Module({
   imports: [
