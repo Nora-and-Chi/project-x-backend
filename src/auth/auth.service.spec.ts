@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
+import { mockEmailService } from '../email/email.service.spec';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -25,7 +26,12 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, mockJwtService, mockUserService],
+      providers: [
+        AuthService,
+        mockJwtService,
+        mockUserService,
+        mockEmailService,
+      ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);

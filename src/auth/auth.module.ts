@@ -5,8 +5,8 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { UsersService } from '../users/users.service';
-import { EmailModule } from 'src/email/email.module';
-import { EmailService } from 'src/email/email.service';
+import { EmailModule } from '../email/email.module';
+import { EmailService } from '../email/email.service';
 
 @Module({
   imports: [

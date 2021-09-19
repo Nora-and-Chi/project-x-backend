@@ -2,16 +2,16 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { MailerService } from '@nestjs-modules/mailer';
 import { EmailService } from './email.service';
 
+export const mockEmailService = {
+  provide: EmailService,
+  useValue: {
+    sendEmail: jest.fn(),
+  },
+};
+
 describe('EmailService', () => {
   let service: EmailService;
   let mailerService: MailerService;
-
-  const mockEmailService = {
-    provide: EmailService,
-    useValue: {
-      sendEmail: jest.fn(),
-    },
-  };
 
   const mockMailerService = {
     provide: MailerService,
