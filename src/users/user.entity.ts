@@ -5,15 +5,15 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
   @Column()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   login_token: string;
 
-  @Column()
+  @Column({ nullable: true, type: 'timestamp' })
   login_token_verified_at: string;
 }

@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -15,9 +16,16 @@ describe('AuthService', () => {
     },
   };
 
+  const mockUserService = {
+    provide: UsersService,
+    useValue: {
+      saveUser: jest.fn(),
+    },
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, mockJwtService],
+      providers: [AuthService, mockJwtService, UsersService, mockUserService],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
@@ -31,6 +39,16 @@ describe('AuthService', () => {
     const payload = { email: 'chi@gmail.com' };
     const token = service.generateToken(payload);
     expect(token).not.toBeUndefined();
+    expect(mockJwtService.useValue.sign).toBeCalled();
     expect(token.split('.')).toHaveLength(3); // verifies that it's a jsonwebtoken
+  });
+
+  it('should save user info', async () => {
+    const email = 'chi@gmail.com';
+    const login_token = service.generateToken({ email });
+    const payload = { email, login_token };
+    await service.saveUserInfo({ email });
+
+    expect(mockUserService.useValue.saveUser).toBeCalledWith(payload);
   });
 });
