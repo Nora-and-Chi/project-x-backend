@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Connection } from 'typeorm';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { AppController, CatsController } from './app.controller';
@@ -19,20 +19,22 @@ import { EmailModule } from './email/email.module';
       type: 'postgres',
       url: process.env.DATABASE_URL,
       // autoLoadEntities: true,
-      host: 'localhost',
-      port: 5432,
-      username: 'chi',
-      password: 'password',
-      database: 'db',
       synchronize: true, // use only on DEV
       // logging: false,
       entities: [__dirname + '/**/*.entity.{js,ts}'],
       retryAttempts: 2,
     }),
     MailerModule.forRootAsync({
-      useFactory: () => ({
-        transport: 'smtp://319b32b90279a2:8d3a4287caf004@smtp.mailtrap.io',
-      }),
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        const user = configService.get('MAILTRAP_USER');
+        const pass = configService.get('MAILTRAP_PASS');
+
+        return {
+          transport: `smtp://${user}:${pass}@smtp.mailtrap.io`,
+        };
+      },
+      inject: [ConfigService],
     }),
     DogsModule,
     AuthModule,
