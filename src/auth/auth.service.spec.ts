@@ -1,11 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { addHours } from 'date-fns';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users';
-import { mockEmailService } from '../email/email.service.spec';
+import { mockEmailService, EmailService } from '../email';
+
+jest.mock('date-fns');
 
 describe('AuthService', () => {
-  let service: AuthService;
+  let authService: AuthService;
+  let userService: UsersService;
+  let jwtService: JwtService;
+  let emailService: EmailService;
 
   const mockJwtService = {
     provide: JwtService,
@@ -34,27 +40,43 @@ describe('AuthService', () => {
       ],
     }).compile();
 
-    service = module.get<AuthService>(AuthService);
+    authService = module.get<AuthService>(AuthService);
+    userService = module.get<UsersService>(UsersService);
+    jwtService = module.get<JwtService>(JwtService);
+    emailService = module.get<EmailService>(EmailService);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(authService).toBeDefined();
   });
 
   it('should generate a token', () => {
     const payload = { email: 'chi@gmail.com' };
-    const token = service.generateToken(payload);
+    const token = authService.generateToken(payload);
     expect(token).not.toBeUndefined();
-    expect(mockJwtService.useValue.sign).toBeCalled();
+    expect(jwtService.sign).toBeCalled();
     expect(token.split('.')).toHaveLength(3); // verifies that it's a jsonwebtoken
   });
 
-  it('should save user info', async () => {
-    const email = 'chi@gmail.com';
-    const login_token = service.generateToken({ email });
-    const payload = { email, login_token };
-    await service.saveUserInfo({ email });
+  describe('saveUserInfo', () => {
+    let newUser;
+    beforeEach(() => {
+      (addHours as jest.Mock).mockResolvedValueOnce(1000);
+      const user = { email: 'chi@gmail.com' };
+      const login_token = authService.generateToken({
+        ...user,
+        exp_date: 1000,
+      });
+      newUser = { login_token, ...user };
+      authService.saveUserInfo(newUser);
+    });
 
-    expect(mockUserService.useValue.saveUser).toBeCalledWith(payload);
+    it('should save user info', async () => {
+      expect(userService.saveUser).toBeCalledWith(newUser);
+    });
+
+    it('should send magic link to user', () => {
+      expect(emailService.sendEmail).toBeCalled();
+    });
   });
 });
