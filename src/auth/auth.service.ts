@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { addHours } from 'date-fns';
+import { addHours, isBefore } from 'date-fns';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/user.entity';
 import { User as UserDTO } from '../users/dto/user.dto';
 import { UsersService } from '../users';
 import { EmailService } from '../email';
+import { DecodedToken } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,5 +26,10 @@ export class AuthService {
     // send magic link email
     this.emailService.sendEmail(user.email, login_token);
     return this.userService.saveUser(newUser);
+  }
+
+  verifyJwtToken(login_token: UserDTO['login_token']): boolean {
+    const decodedToken = this.jwtService.decode(login_token) as DecodedToken;
+    return isBefore(new Date(), decodedToken.exp_date);
   }
 }
