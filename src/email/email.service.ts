@@ -20,7 +20,7 @@ export class EmailService {
       from: 'chi@project-x.com',
       to: email,
       subject: 'Thanks for signing up',
-      html: `<b>Welcome to your ultimate progress tracker.</b> \n Click on the link to sign in ${url}`,
+      html: `<b>Welcome to your ultimate progress tracker.</b> \n Click on the <a href="${url}">link</a> to sign in`,
     };
 
     this.mailerService

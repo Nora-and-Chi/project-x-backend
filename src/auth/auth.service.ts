@@ -30,6 +30,18 @@ export class AuthService {
 
   verifyJwtToken(login_token: UserDTO['login_token']): boolean {
     const decodedToken = this.jwtService.decode(login_token) as DecodedToken;
-    return isBefore(new Date(), decodedToken.exp_date);
+    return isBefore(new Date(), new Date(decodedToken.exp_date));
+  }
+
+  async isUserPresent(login_token: UserDTO['login_token']): Promise<boolean> {
+    const decodedToken = this.jwtService.decode(login_token) as DecodedToken;
+    try {
+      const user = await this.userService.findUser({
+        email: decodedToken.email,
+      });
+      return user;
+    } catch (err) {
+      console.log('error finding if user is present', err);
+    }
   }
 }

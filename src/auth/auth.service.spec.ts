@@ -32,6 +32,7 @@ describe('AuthService', () => {
     provide: UsersService,
     useValue: {
       saveUser: jest.fn(),
+      findUser: jest.fn(() => true),
     },
   };
 
@@ -110,6 +111,24 @@ describe('AuthService', () => {
       const isMagicLinkValid = authService.verifyJwtToken(login_token);
       expect(jwtService.decode).toBeCalled();
       expect(isMagicLinkValid).toBeFalsy();
+    });
+  });
+
+  describe('isUserPresent', () => {
+    let login_token;
+    beforeEach(() => {
+      const user = { email: 'chi@gmail.com' };
+      login_token = authService.generateToken({
+        ...user,
+        exp_date: '2021-09-27T06:34:48.236Z',
+      });
+    });
+
+    it('should verify that the user in login_token exists in the database', async () => {
+      try {
+        expect(await authService.isUserPresent(login_token)).toBe(true);
+        expect(userService.findUser).toBeCalled();
+      } catch (err) {}
     });
   });
 });

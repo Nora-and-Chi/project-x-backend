@@ -15,6 +15,7 @@ describe('UsersService', () => {
       save: jest.fn((user) => {
         return Promise.resolve(user);
       }),
+      find: jest.fn(),
     },
   };
 
@@ -30,10 +31,20 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should save user info in user relation', () => {
-    const user = { email: 'chi@test.com' };
-    service.saveUser(user);
-    expect(userMockService.useValue.create).toBeCalledWith(user);
-    expect(userMockService.useValue.save).toHaveBeenCalled();
+  describe('saveUser', () => {
+    it('should save user info in user relation', () => {
+      const user = { email: 'chi@test.com' };
+      service.saveUser(user);
+      expect(userMockService.useValue.create).toBeCalledWith(user);
+      expect(userMockService.useValue.save).toHaveBeenCalled();
+    });
+  });
+
+  describe('findUser', () => {
+    it('should find user record by id in user relation', () => {
+      const user = { id: 'uuid', email: 'chi@gmail.com' };
+      service.findUser(user);
+      expect(userMockService.useValue.find).toHaveBeenCalled();
+    });
   });
 });

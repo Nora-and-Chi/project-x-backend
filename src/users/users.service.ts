@@ -15,7 +15,16 @@ export class UsersService {
       const createdUser = this.userRepository.create(payload);
       return await this.userRepository.save(createdUser);
     } catch (err) {
-      console.log('err', err);
+      console.error('error saving user', payload);
+    }
+  }
+
+  async findUser(payload: UserDTO) {
+    try {
+      const userFound = await this.userRepository.find(payload);
+      return !!userFound;
+    } catch (err) {
+      console.error('error finding user', payload);
     }
   }
 }
