@@ -1,0 +1,16 @@
+name: Create Release
+on:
+  push:
+    branches: [master]
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - with:
+        fetch-depth: '0'
+      - name: Bump version and tag release
+        uses: anothrNick/github-tag-action
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

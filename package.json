@@ -1,7 +1,6 @@
 {
   "name": "project-x-backend",
   "private": true,
-  "version": "1.0.0",
   "description": "Backend repository for project-x",
   "license": "MIT",
   "scripts": {
