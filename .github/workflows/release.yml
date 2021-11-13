@@ -11,6 +11,6 @@ jobs:
       - with:
         fetch-depth: '0'
       - name: Bump version and tag release
-        uses: anothrNick/github-tag-action
+        uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
