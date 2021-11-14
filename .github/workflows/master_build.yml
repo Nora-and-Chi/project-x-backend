@@ -1,18 +1,17 @@
-name: Run E2E Tests
+name: Master - Build App
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
 
 jobs:
-  e2e-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run e2e tests
+      - name: Build app
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm ci
-      - run: npm run test:e2e
+      - run: |
+          npm ci
+          npm run build
