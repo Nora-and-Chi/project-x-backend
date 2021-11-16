@@ -1,0 +1,18 @@
+version: 2
+updates:
+  # Keep npm dependencies up to date
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "08:00"
+      timezone: "CET"
+    pull-request-branch-name:
+      separator: "-"
+    labels:
+      - "Dependabot"
+    commit-message:
+      prefix: "(fix) update"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-patch"]
