@@ -1,8 +1,6 @@
-name: Build App
+name: Master - Build App
 on:
   push:
-    branches: [master]
-  pull_request:
     branches: [master]
 
 jobs:
@@ -14,5 +12,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm ci
-      - run: npm run build
+      - run: |
+          npm ci
+          npm run build

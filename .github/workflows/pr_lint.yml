@@ -1,0 +1,27 @@
+name: PR - Run Typescript
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run Typescript check
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: |
+          npm i
+          npm run typecheck
+
+      - name: Lint 🧼
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: |
+          npm i
+          npm run lint

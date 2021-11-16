@@ -1,18 +1,17 @@
-name: Run Unit Tests
+name: PR - Build App
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
 
 jobs:
-  unit-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run Jest
+      - name: Build app
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm ci
-      - run: npm test
+      - run: |
+          npm ci
+          npm run build
