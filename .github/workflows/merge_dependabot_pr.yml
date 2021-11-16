@@ -16,7 +16,6 @@ jobs:
       - "build"
       - "typecheck"
       - "unit-test"
-      - "lint"
     steps:
       - name: Approve pull request
         uses:  "actions/github-script@v5"
