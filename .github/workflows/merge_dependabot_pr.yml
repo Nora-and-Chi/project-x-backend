@@ -1,21 +1,14 @@
 name: Merge dependabot pr
 on: 
-  pull_request:
-    branches: [master]
-
-#  workflow_run:
-#    workflows: ["PR - Build App", "PR - Run Typescript", "PR - Run Unit Tests"]
-#    types: [completed]
+  workflow_run:
+    workflows: ["PR - Build App", "PR - Run Typescript", "PR - Run Unit Tests"]
+    types: [completed]
 
 jobs:
   merge_dependabot_pr:
     if: >
       github.event.workflow_run.conclusion == 'success' && github.event.label.name == 'Dependabot' && github.actor == 'dependabot[bot]' 
     runs-on: ubuntu-latest
-    needs:
-      - "build"
-      - "typecheck"
-      - "unit-test"
     steps:
       - name: Approve pull request
         uses:  "actions/github-script@v5"
@@ -38,7 +31,7 @@ jobs:
         with: 
           github-action: "${{ secrets.GITHUB_TOKEN }}"
           script: |
-            const pullRequest = context.payload.worklow_run.pull_requests[0]
+            const pullRequest = context.payload.workflow_run.pull_requests[0]
             const repo = context.repo
             await github.rest.pulls.merge({
               merge_method: "squash",
