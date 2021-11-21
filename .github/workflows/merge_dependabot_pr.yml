@@ -7,8 +7,6 @@ on:
 jobs:
   merge_dependabot_pr:
     if: |
-        contains(github.workflow, "PR - Build App") &&
-        github.event.workflow_run.conclusion == 'success' &&
         github.actor == 'dependabot[bot]
     runs-on: ubuntu-latest
     steps:
