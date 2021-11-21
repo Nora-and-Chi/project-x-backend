@@ -6,6 +6,8 @@ on:
 
 jobs:
   merge_dependabot_pr:
+    if: |
+        github.actor == 'dependabot[bot] && github.event.workflow_run.conclusion == 'success' && github.event.label.name == 'Dependabot'
     runs-on: ubuntu-latest
     steps:
       - name: Approve pull request
