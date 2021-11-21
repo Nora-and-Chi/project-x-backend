@@ -1,13 +1,11 @@
 name: Merge dependabot pr
 on: 
   workflow_run:
-    workflows: ["PR - Build App", "PR - Run Typescript", "PR - Run Unit Tests"]
+    workflows: ["PR - Build App"]
     types: [completed]
 
 jobs:
   merge_dependabot_pr:
-    if: |
-        github.actor == 'dependabot[bot]
     runs-on: ubuntu-latest
     steps:
       - name: Approve pull request
