@@ -12,12 +12,12 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]'}}
     steps:
       - name: Approve PR
-      - run: gh pr review --approve
+        run: gh pr review --approve
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge pull request
-      - run: gh pr merge -d -s
+        run: gh pr merge -d -s
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
