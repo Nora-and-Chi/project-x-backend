@@ -1,17 +1,10 @@
 name: Merge dependabot pr
 on: 
   workflow_dispatch:
-  pull_request:
-    branches: 
-      - master
-    types: [opened]
-
-  # workflow_run:
-  #   types:
-  #     - completed
-  #   workflows:
-  #     - "PR - Build App"
-
+    pull_request:
+      branches: 
+        - master
+      types: [opened]
 
 permissions:
   contents: read
