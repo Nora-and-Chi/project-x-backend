@@ -1,0 +1,14 @@
+name: Print Github Context
+on:
+  pull_request:
+    branches: [master]
+    
+jobs:
+  dump_context:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump context
+      env: 
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_TOKEN"
