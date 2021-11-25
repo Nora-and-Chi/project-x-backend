@@ -1,11 +1,24 @@
 name: Merge dependabot pr
-on: pull_request_target
+on: 
+  pull_request:
+    branches: 
+      - master
+    types: [opened]
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 jobs:
+  dump_context:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump context
+      env: 
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_TOKEN"
+  
   merge_dependabot_pr:
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]'}}
