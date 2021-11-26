@@ -22,7 +22,7 @@ jobs:
         run: gh pr review --approve "$PR_URL"
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_URL: ${{github.event.pull_request.html.href }}
+          PR_URL: ${{ github.event.pull_request.html.href }}
 
 #       - name: Merge pull request
 #         run: gh pr merge -d -s "$PR_URL"
