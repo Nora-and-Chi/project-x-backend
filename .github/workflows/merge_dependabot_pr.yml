@@ -1,27 +1,16 @@
 name: Merge dependabot pr
 on: 
   pull_request:
-    branches: 
-      - master
-    types: [opened]
+    branches: [master]
 
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
-  dump_context:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Dump context
-      env: 
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: |
-        echo "$GITHUB_TOKEN"
-  
   merge_dependabot_pr:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]'}}
+    if: ${{ github.user.login == 'dependabot[bot]'}}
     steps:
       - name: Fetch Dependabot metadata
         id: dependabot-metadata
@@ -32,12 +21,12 @@ jobs:
       - name: Approve PR
         run: gh pr review --approve "$PR_URL"
         env: 
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{github.event.pull_request.html.href}}
 
       - name: Merge pull request
         run: gh pr merge -d -s "$PR_URL"
         env: 
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_URL: ${{github.event.pull_request.html.href}}
 
