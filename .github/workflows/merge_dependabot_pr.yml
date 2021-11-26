@@ -12,12 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 #     if: ${{ github.user.login == 'dependabot[bot]' }}
     steps:
-      - name: Fetch Dependabot metadata
-        id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v1.1.1
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-
       - name: Approve PR
         run: gh pr review --approve "$PR_URL"
         env: 
