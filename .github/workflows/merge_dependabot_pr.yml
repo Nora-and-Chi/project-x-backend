@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 jobs:
-  dependabot:
+  merge_dependabot_pr:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
