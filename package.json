@@ -22,7 +22,7 @@
     "generate-service": "nest g service"
   },
   "dependencies": {
-    "@nestjs-modules/mailer": "^1.6.0",
+    "@nestjs-modules/mailer": "^1.6.1",
     "@nestjs/common": "^8.0.6",
     "@nestjs/config": "^1.0.1",
     "@nestjs/core": "^8.2.5",
