@@ -10,7 +10,7 @@ jobs:
     - name: Dump context
       env: 
         GITHUB_CONTEXT: ${{ toJson(github) }}
-        secrets: ${{ secrets }}
+        SECRETS: ${{ secrets.SLACK_WEBHOOK }}
       run: |
         echo "$GITHUB_CONTEXT"
-        echo "$secrets"
+        echo "$SECRETS"
