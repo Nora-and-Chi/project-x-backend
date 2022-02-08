@@ -10,5 +10,7 @@ jobs:
     - name: Dump context
       env: 
         GITHUB_CONTEXT: ${{ toJson(github) }}
+        secrets: ${{ secrets }}
       run: |
-        echo "$GITHUB_TOKEN"
+        echo "$GITHUB_CONTEXT"
+        echo "$secrets"
