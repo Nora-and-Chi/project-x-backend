@@ -14,5 +14,5 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: dependabot-alerts
-          SLACK_WEBHOOK: "https://hooks.slack.com/services/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"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE: 'Dependabot PR has been opened, hold on tight :rocket'
