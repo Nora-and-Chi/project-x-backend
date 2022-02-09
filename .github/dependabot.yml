@@ -6,14 +6,12 @@ updates:
     target-branch: master
     schedule:
       interval: "daily"
-      time: "08:00"
+      time: "16:00"
       timezone: "CET"
     pull-request-branch-name:
       separator: "-"
     labels:
       - "Dependabot"
-    commit-message:
-      prefix: "(fix) update"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]

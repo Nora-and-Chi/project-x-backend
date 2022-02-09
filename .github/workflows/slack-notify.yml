@@ -11,6 +11,6 @@ jobs:
       - name: Send slack notification
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: dependabot-alerts
+          SLACK_CHANNEL: "dependabot-alerts"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: 'Dependabot PR has been opened, hold on tight :rocket'
+          SLACK_MESSAGE: "Dependabot PR has been opened, hold on tight :rocket"
